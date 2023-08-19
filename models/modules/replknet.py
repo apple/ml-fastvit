@@ -28,7 +28,6 @@ class ReparamLargeKernelConv(nn.Module):
         groups: int,
         small_kernel: int,
         inference_mode: bool = False,
-        activation: nn.Module = nn.GELU(),
     ) -> None:
         """Construct a ReparamLargeKernelConv module.
 
@@ -40,7 +39,6 @@ class ReparamLargeKernelConv(nn.Module):
             groups: Group number. Default: 1
             small_kernel: Kernel size of small kernel conv branch.
             inference_mode: If True, instantiates model in inference mode. Default: ``False``
-            activation: Activation module. Default: ``nn.GELU``
         """
         super(ReparamLargeKernelConv, self).__init__()
 
@@ -48,7 +46,6 @@ class ReparamLargeKernelConv(nn.Module):
         self.groups = groups
         self.in_channels = in_channels
         self.out_channels = out_channels
-        self.activation = activation
 
         self.kernel_size = kernel_size
         self.small_kernel = small_kernel
@@ -84,8 +81,6 @@ class ReparamLargeKernelConv(nn.Module):
             out = self.lkb_origin(x)
             if hasattr(self, "small_conv"):
                 out += self.small_conv(x)
-
-        self.activation(out)
         return out
 
     def get_kernel_bias(self) -> Tuple[torch.Tensor, torch.Tensor]:
