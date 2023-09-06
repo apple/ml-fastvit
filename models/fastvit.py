@@ -282,6 +282,7 @@ class RepMixer(nn.Module):
                 padding=kernel_size // 2,
                 groups=dim,
                 use_act=False,
+                use_bn_conv=True,
             )
             self.use_layer_scale = use_layer_scale
             if use_layer_scale:
