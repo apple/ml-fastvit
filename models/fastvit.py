@@ -828,7 +828,7 @@ class FastViT(nn.Module):
         # For segmentation and detection, extract intermediate output
         if self.fork_feat:
             # add a norm layer for each output
-            self.out_indices = [0, 2, 4, 6]
+            self.out_indices = [0, 2, 4, 7]
             for i_emb, i_layer in enumerate(self.out_indices):
                 if i_emb == 0 and os.environ.get("FORK_LAST3", None):
                     """For RetinaNet, `start_level=1`. The first norm layer will not used.
